@@ -1,63 +1,75 @@
 (function(){
 	"use strict";
+     var change_img_time = 4000,
+      transition_speed = 400;//Setting the interval for transition
+
+    var slideIndex = 0;
+    var current, changeTimeout;
 	var app = {
-		init: function(){
-			$("#carousel_ul li:first").before($("#carousel_ul li:last"));
-		},
+        bind: function(){
+            $("#right_scroll").hover(function(event){
+                $(this).fadeTo(1,0.4);
+            },
+            function(){
+                $(this).fadeTo(1,0);
+            });
 
-		bind: function(){
-			//when user clicks the image for sliding right  
-        $('#right_scroll').click(function(){  
-  
-            //get the width of the items ( i like making the jquery part dynamic, so if you change the width in the css you won't have o change it here too ) '  
-            var item_width = $('#carousel_ul li').outerWidth() + 10;  
-  
-            //calculate the new left indent of the unordered list  
-            var left_indent = parseInt($('#carousel_ul').css('left')) - item_width;  
-  
-            //make the sliding effect using jquery's anumate function '  
-            $('#carousel_ul').animate({'left' : left_indent},{queue:false, duration:500},function(){  
-  
-                //get the first list item and put it after the last list item (that's how the infinite effects is made) '  
-                $('#carousel_ul li:last').after($('#carousel_ul li:first'));  
-  
-                //and get the left indent to the default -210px  
-                $('#carousel_ul').css({'left' : '-210px'});  
-            });  
-        });  
-  
-        //when user clicks the image for sliding left  
-        $('#left_scroll').click(function(){  
-  
-            var item_width = $('#carousel_ul li').outerWidth() + 10;  
-  
-            /* same as for sliding right except that it's current left indent + the item width (for the sliding right it's - item_width) */  
-            var left_indent = parseInt($('#carousel_ul').css('left')) + item_width;  
-  
-            $('#carousel_ul').animate({'left' : left_indent},{queue:false, duration:500},function(){  
-  
-            /* when sliding to left we are moving the last item before the first item */  
-            $('#carousel_ul li:first').before($('#carousel_ul li:last'));  
-  
-            /* and again, when we make that change we are setting the left indent of our unordered list to the default -210px */  
-            $('#carousel_ul').css({'left' : '-210px'});  
-            });  
-  
-        });  
-		},
+            $("#left_scroll").hover(function(event){
+                $(this).fadeTo(1,0.4);
+            },
+            function(){
+                $(this).fadeTo(1,0);
+            });
 
-		setTimer: function setInterval(function(){
-		$("#carousel ul").animate({marginLeft:-210},1000,function(){
-			$(this).find("li:last").after($(this).find("li:first"));
-			$(this).css({marginLeft:0});
-		})
-	},5000);
+            $("#carousel_bottom").hover(function(event){
+                $(this).fadeTo(1,0.4);
+            },
+            function(){
+                $(this).fadeTo(1,0);
+            });
+
+            $("#left_scroll").click(function(){
+                app.moveList("prev");
+            });
+
+            $("#right_scroll").click(function(){
+                app.moveList("next");
+            });
+
+            $("#dots li").click(function(){
+                var i = $("#dots li").index(this);
+                app.moveList(i);
+            });
+        },
+
+        moveList: function(newIndex){
+            var listItem =  $("#carousel_ul").children("li");
+            var dotItem = $("#dots").children("li");
+            var listLength = listItem.length;
+            var i = newIndex;
+            if (newIndex == "prev") {
+                i = (current > 0) ? (current - 1) : (listLength - 1);
+            }
+            if (newIndex == "next") {
+                i = (current < listLength - 1) ? (current + 1) : 0;
+            }
+            dotItem.removeClass("active").eq(i).addClass("active");
+            // listItem.eq(i).addClass("hideMe");
+            listItem.hide().eq(i).show();
+            current = i;
+        }
+
+        
+
+        
 
 	};
 
 	$(document).ready(function(){
-		app.init();
-		app.bind();
-		app.setTimer();
+        app.bind();
+        app.moveList("next");
+        setInterval(function(){
+            $("#right_scroll").trigger('click');
+        },4000);
 	});
 })();

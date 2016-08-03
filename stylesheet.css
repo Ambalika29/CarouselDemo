@@ -27,32 +27,85 @@ header{
 }
 
 .carouselContainer{
-	/*display: flex;
-	flex-direction: row;*/
-	margin: 30px auto;
-	overflow: hidden;
-	width: 80%;
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+
 }
 
 .carouselInner{
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+	justify-content: space-between;
+	margin:20px auto;
+	/*height: 500px;
 	overflow: hidden;
-	width: 95%;
+*/
 }
 
 .carouselUlStyle{
-	display: flex;
-	flex-direction: row;
 	list-style: none;
 	position: relative;
-	left: -210px;
-	margin: 0;
+	margin:0 auto;
 	padding: 0;
-	/*width: 99999px*/
-}
-.carouselLiStyle{
-	/*width: 50%;*/
+	overflow: hidden;
+	width: 100%;
+	
 }
 
-#left_scroll, #right_scroll{
-	background-color: pink;
+.leftScroll{
+	background: #ABAAAA;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: relative;
+	left: 7em;
+	z-index: 999;
+	opacity: 0.4;
+}
+
+.rightScroll{
+	background: #ABAAAA;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: relative;
+	left: -7em;
+	z-index: 999;
+	opacity: 0;
+}
+
+.carouselBottom{
+	background: #ABAAAA;
+	width: 100%;
+	position: relative;
+	opacity: 0;
+	top: -5em;
+	padding: 5px;
+}
+.dotUL{
+	display: flex;
+	flex-direction: row;
+	list-style:none;
+	align-items: center;
+	justify-content: center;
+}
+
+.dotUL li {
+	border-radius:15px;
+  	width:15px;
+	height:15px;
+	margin: 0 5px;
+	border:2px solid #0A2099;
+	background: white;
+	cursor:pointer;
+}
+
+.dotUL li.active{
+	background: ##040F4B;
+}
+
+.hideMe{
+	opacity: 0;
 }
